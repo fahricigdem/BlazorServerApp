@@ -2,15 +2,11 @@
 
 <h1>ToDos</h1>
 
+<input @bind="todo" @bind:event="oninput" />
 
-
-<p>Todo: @todo </p>
-
-
+<p>test: @todo </p>
 
 @code {
 
-    string todo = "uuuuu";
-
+    string todo = "todo1";
 }
-

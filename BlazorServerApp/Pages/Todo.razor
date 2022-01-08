@@ -7,11 +7,114 @@
 
 <input @bind="modo" />
 <p>test: @modo </p>
-sdfs
+
+
+<p>
+    <label>person <input type="text" @bind="person.salesMan" /> </label> @person.salesMan
+</p>
+<p>
+    <label> isActive <input type="checkbox" @bind="person.isActive" />  &nbsp;  @person.isActive </label>
+</p>
+
+<p>
+    <label>amount <input type="number" @bind="person.amount" /></label> @person.amount
+</p>
+
+<p>
+    <label> location-1 <input @bind="person2.locations[0].city" /></label> @person2.locations[0].city
+</p>
+
+<p>
+    <label><input type="radio" name="group" value="1" checked="@(selectedGroup==1)" @onclick="()=>selectedGroup=1" /> 1 </label>
+    <label><input type="radio" name="group" value="2" checked="@(selectedGroup==2)" @onclick="()=>selectedGroup=2" /> 2 </label>
+    selectedGroup: @selectedGroup
+</p>
+
+<p>
+    <select @bind="selectedLocation" >
+        <option value="0">choose a city</option>
+        @foreach (var i in person.locations)
+        {
+            <option value="@i.locationId">@i.city</option>
+        }
+    </select>
+    @selectedLocation
+</p>
+
+<ul>
+    @foreach (var i in person.locations)
+    {
+        <li> @i.city</li>
+    }
+</ul>
+
+<table class="table">
+    @foreach(var i in person.locations)
+    {
+        <tr>
+            <td>@i.locationId</td>
+            <td>
+                 <input @bind="@i.city" @bind:event="oninput"/>
+            </td>
+        </tr>
+    }
+</table>
+
+
 
 @code {
 
     string todo = "todo1";
 
     string modo = "modo1";
+
+    int selectedGroup = 1;
+
+    int selectedLocation = 0;
+
+    IndexViewModel person = new();
+    IndexViewModel person2 = new();
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        person = new()
+        {
+            salesMan = "Fahri",
+            isActive = true,
+            amount = 1000,
+            locations = new List<Location> {
+                new Location  {locationId= 1, city="Ankara"},
+                new Location  {locationId= 2, city="Adana"},
+                new Location  {locationId= 3, city="Corum"},
+                new Location  {locationId= 4, city="Tokat"},
+
+            }
+        };
+
+        person2.salesMan = "Onur";
+        System.Console.WriteLine(person2.salesMan);
+        System.Console.WriteLine(person2.isActive);
+        System.Console.WriteLine(person2.locations);
+        person2.locations = new List<Location> { new Location {locationId=1,city="Izmir"} };
+        System.Console.WriteLine(person2.locations[0].city);
+    }
+
+
+    class IndexViewModel
+    {
+        public string salesMan { get; set; }
+        public bool isActive { get; set; }
+        public int amount { get; set; }
+        public List<Location> locations { get; set; }
+    }
+
+    class Location
+    {
+        public int locationId { get; set; }
+        public string city { get; set; }
+    }
+
 }

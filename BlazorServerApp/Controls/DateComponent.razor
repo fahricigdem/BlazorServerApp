@@ -1,0 +1,26 @@
+﻿<div class="p-3 mb-2 bg-info text-dark">
+    <h4>Date Component</h4>
+
+    @simdi.ToString("dd/MM/yyyy")
+    @nowString
+    @esimdi
+    @DateTime.Now.ToString("yy/MM/dd")
+</div>
+
+@code {
+
+    DateTime simdi = DateTime.Now;
+
+    string nowString;
+
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+        nowString = simdi.ToString("dd/MM/yyyy");
+
+    }
+
+    string esimdi = DateTime.Now.ToString("dd/MM/yyyy");
+
+}

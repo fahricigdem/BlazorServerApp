@@ -1,0 +1,75 @@
+﻿@page "/details/{id:int}"
+
+<h5>Product Details</h5>
+
+<h2>@product.Name</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Color</th>
+            <th scope="col">Im Lager</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in info)
+        {
+        <tr>
+            <td>@i.Color</td>
+            <td>@i.Number</td>
+            <td>@product.Price.ToString("C")</td>
+        </tr>
+
+        }
+    </tbody>
+</table>
+
+
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    List<Product> products = new List<Product>();
+    List<Info> infos = new List<Info>();
+
+    Product product;
+    //List<Info> info;
+    IEnumerable<Info> info;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        products.Add(new Product { ProductId = 123, Name = "Pencil", Price = 3.4m });
+        products.Add(new Product { ProductId = 456, Name = "Buch", Price = 5.7m });
+        products.Add(new Product { ProductId = 789, Name = "Eraser", Price = 1.99m });
+
+        infos.Add(new Info { ProductId = 123, Number = 32, Color = "red" });
+        infos.Add(new Info { ProductId = 123, Number = 23, Color = "green" });
+        infos.Add(new Info { ProductId = 456, Number = 5, Color = "white" });
+        infos.Add(new Info { ProductId = 456, Number = 4, Color = "black" });
+        infos.Add(new Info { ProductId = 789, Number = 45, Color = "blue" });
+        infos.Add(new Info { ProductId = 789, Number = 29, Color = "yellow" });
+
+        product = products.FirstOrDefault(x=>x.ProductId==Id);
+        //info = infos.Where(x => x.ProductId == Id).ToList();
+        info = infos.Where(x => x.ProductId == Id);
+    }
+
+    public class Product
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class Info
+    {
+        public int ProductId { get; set; }
+        public int Number { get; set; }
+        public string Color { get; set; }
+    }
+}

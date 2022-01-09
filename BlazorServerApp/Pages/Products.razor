@@ -1,0 +1,37 @@
+﻿@page "/products"
+
+<h3>Products</h3>
+
+<ul class="list-group" style="width: 12rem;">
+    @foreach (var i in products)
+    {
+    <li class="list-group-item d-flex justify-content-between align-items-center" >
+        <a class="nav-link" href="@($"/details/{i.ProductId}")">@i.Name</a>
+        <span class="badge bg-primary rounded-pill text-white">@i.Price.ToString("C")</span>
+    </li>
+        
+    }
+</ul>
+
+
+@code {
+
+    List<Product> products = new List<Product>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        products.Add(new Product { ProductId= 123, Name="Pencil", Price=3.4m });
+        products.Add(new Product { ProductId = 456, Name = "Buch", Price = 5.7m });
+        products.Add(new Product { ProductId = 789, Name = "Eraser", Price = 1.99m });
+    }
+
+    public class Product
+    {
+        public int ProductId { get; set; }
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+    }
+
+}

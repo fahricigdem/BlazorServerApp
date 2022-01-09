@@ -1,4 +1,5 @@
 ﻿@page "/todo"
+@inherits BlazorServerApp.BaseComponents.AnyBaseComponent
 
 <h1>ToDos</h1>
 
@@ -60,6 +61,7 @@
     }
 </table>
 
+<div class="bg-warning">@anything</div>
 
 
 @code {
@@ -95,11 +97,11 @@
         };
 
         person2.salesMan = "Onur";
-        System.Console.WriteLine(person2.salesMan);
-        System.Console.WriteLine(person2.isActive);
-        System.Console.WriteLine(person2.locations);
+        Console.WriteLine(person2.salesMan);
+        Console.WriteLine(person2.isActive);
+        Console.WriteLine(person2.locations);
         person2.locations = new List<Location> { new Location {locationId=1,city="Izmir"} };
-        System.Console.WriteLine(person2.locations[0].city);
+        Console.WriteLine(person2.locations[0].city);
     }
 
 

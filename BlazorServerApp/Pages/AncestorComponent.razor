@@ -1,0 +1,24 @@
+﻿@page "/ancestor"
+
+    <div style="background-color: brown; padding: 1rem;">
+        <h3>Ancestor Component</h3>
+
+        <label>
+            kelime1:
+            <input @bind="@kelime1" @bind:event="oninput" />
+        </label>
+
+        <p>Sabit1: dededen2</p>
+
+        <CascadingValue Name="Isim1" Value="@kelime1">
+            <CascadingValue Name="Sabit1" Value="@("fixed")" fixed="true">
+                <ParentComponent />
+            </CascadingValue>
+        </CascadingValue>
+
+</div>
+
+
+@code {
+    private string kelime1 = "dededen1";
+}

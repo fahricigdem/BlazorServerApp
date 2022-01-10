@@ -8,10 +8,10 @@
             <input @bind="@kelime1" @bind:event="oninput" />
         </label>
 
-        <p>Sabit1: dededen2</p>
+        <p>Sabit1: sabit deger</p>
 
         <CascadingValue Name="Isim1" Value="@kelime1">
-            <CascadingValue Name="Sabit1" Value="@("sabit deger")" fixed="true">
+            <CascadingValue Name="Sabit1" Value="@("sabit deger")" IsFixed="true">
                 <ParentComponent />
             </CascadingValue>
         </CascadingValue>

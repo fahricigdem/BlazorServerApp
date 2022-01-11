@@ -1,8 +1,39 @@
-﻿<div style="background-color: blue; padding: .5rem;">
+﻿<div style="background-color: lightskyblue; padding: .5rem;">
     <h3>ParentComponent</h3>
+    <label>
+        Yukari Gonder:
+        <input @bind="asagidan" @bind:event="oninput" @onkeyup="YukariGonder" />
+        <input @bind="asagidan2" @bind:event="oninput" @onkeyup="YukariGonder" />
+    </label>
+    <br /><br />
+    <ChildComponent  SetValue2="SetValue2"/>
 
-    <ChildComponent />
 </div>
 @code {
+
+    [Parameter]
+    public Action<string> SetValue { get; set; }  // as delegete (child can't use it, don't send below!) + bu yukardan pass edilmeseydi error verecekti.
+
+    [Parameter]
+    public EventCallback<string> SetValue2 { get; set; }  // as callback + bu yukardan pass edilmeseydi error vermiyor.
+
+    private string asagidan = "hi Papa!";
+    private string asagidan2 = "hi Papa2!";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+        SetValue.Invoke(asagidan);
+        SetValue2.InvokeAsync(asagidan2);
+    }
+
+    private void YukariGonder()
+    {
+
+        SetValue.Invoke(asagidan);
+        SetValue2.InvokeAsync(asagidan2);
+    }
 
 }

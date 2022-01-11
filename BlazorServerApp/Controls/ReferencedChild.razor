@@ -1,0 +1,48 @@
+﻿<div style="background-color: lightskyblue; margin: 1rem;">
+
+    <h3>Referenced Child</h3>
+
+    @if (goster)
+    {
+        <p>deger1: @deger1</p>
+        
+        <a type="button" style="color:mediumvioletred;" @onclick="Hide">
+            Hide! 
+        </a>
+
+        @if (deger1 != null & deger1?.Length != 0 )
+        {
+            <a type="button" style="color:lightseagreen;" @onclick="Reset">
+                &nbsp;| Reset
+            </a>
+        }
+    }
+
+</div>
+
+@code {
+    private string deger1;
+    private bool goster = false;
+
+    public void SetDeger(string value)=> deger1 = value;
+
+    public void ToggleGoster() => goster = !goster;
+
+    [Parameter]
+    public EventCallback<bool> setShow { get; set; }
+
+    [Parameter]
+    public EventCallback<string> setGiden { get; set; }
+
+    public void Reset()
+    {
+        deger1 = null;
+        setGiden.InvokeAsync(null);
+    }
+
+    public void Hide()
+    {
+        goster = !goster;
+        setShow.InvokeAsync(goster);
+    }
+}

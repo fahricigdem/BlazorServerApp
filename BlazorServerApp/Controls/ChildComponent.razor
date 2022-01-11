@@ -1,14 +1,46 @@
-﻿<div style="background-color:pink; padding:.5rem;">
+﻿<div style="background-color:lightpink; padding:.5rem;">
     <h3>ChildComponent</h3>
 
-    <p>kelime1:@dededengeldi1 </p>
-    <p>Sabit1:@dededengeldi2 </p>
+    <p>Yukaridan gelen kelime1:<span style="background-color:sandybrown;">@dededengeldi1 </span></p>
+    <p>Yukaridan gelen Sabit1: <span style="background-color:sandybrown;">@dededengeldi2 </span></p>
+
+    <br /><br />
+    <label>
+        Yukari Gonder:
+        <input @bind="torundan" @bind:event="oninput" @onkeyup="YukariGonder" />
+
+    </label>
+
 </div>
 
-    @code {
-        [CascadingParameter(Name ="Isim1")]
-        private string dededengeldi1 { get; set; }
 
-        [CascadingParameter(Name = "Sabit1")]
-        private string dededengeldi2 { get; set; }
+@code {
+    [CascadingParameter(Name ="Isim1")]
+    private string dededengeldi1 { get; set; }
+
+    [CascadingParameter(Name = "Sabit1")]
+    private string dededengeldi2 { get; set; }
+
+
+    [Parameter]
+    public EventCallback<string> SetValue2 { get; set; }
+
+
+    private string torundan="hi grandPa!";
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        SetValue2.InvokeAsync(torundan);
+       
+
     }
+
+    private void YukariGonder()
+    {
+        SetValue2.InvokeAsync(torundan);
+       
+    }
+
+}

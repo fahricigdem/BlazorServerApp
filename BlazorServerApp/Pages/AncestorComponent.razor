@@ -1,24 +1,52 @@
 ﻿@page "/ancestor"
 
-    <div style="background-color: brown; padding: 1rem;">
-        <h3>Ancestor Component</h3>
+<div style="background-color: sandybrown; padding: 1rem;">
+    <h3>Ancestor Component (Cascading, Callback and Delegate)</h3>
 
-        <label>
-            kelime1:
-            <input @bind="@kelime1" @bind:event="oninput" />
-        </label>
+    @*callback*@
+    <p>asagidan gelen: <span style="background-color:antiquewhite;">@oben</span></p>
+    <p>asagidan gelen: <span style="background-color:antiquewhite;">@oben2</span></p>
 
-        <p>Sabit1: sabit deger</p>
+    @*cascading parameter*@
+    <label>
+        Asagi Gonder:
+        <input @bind="@kelime1" @bind:event="oninput" />
+    </label>
 
-        <CascadingValue Name="Isim1" Value="@kelime1">
-            <CascadingValue Name="Sabit1" Value="@("sabit deger")" IsFixed="true">
-                <ParentComponent />
-            </CascadingValue>
+    <p>Asagi giden Sabit1: sabit deger</p>
+
+    <CascadingValue Name="Isim1" Value="@kelime1">
+        <CascadingValue Name="Sabit1" Value="@("sabit deger")" IsFixed="true">
+            <ParentComponent SetValue="SetOben" SetValue2="SetOben2" />
         </CascadingValue>
+    </CascadingValue>
+
+
+
+
+
 
 </div>
 
 
 @code {
     private string kelime1 = "dededen1";
+
+    // callback and delegete
+    private string oben = "yukarisi";
+    private string oben2 = "yukarisi2";
+
+    private void SetOben(string value)
+    {
+        oben = value;
+        //StateHasChanged();
+    }
+
+    private void SetOben2(string value)
+    {
+        oben2 = value;
+
+    }
+
+
 }

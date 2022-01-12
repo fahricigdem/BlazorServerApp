@@ -1,0 +1,16 @@
+﻿<div class="mb-3 row">
+    @Label
+    <div class="col-sm-10">
+        @Control
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter]
+    public RenderFragment Label { get; set; }
+
+    [Parameter]
+    public RenderFragment Control { get; set; }
+}

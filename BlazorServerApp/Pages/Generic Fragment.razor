@@ -1,0 +1,39 @@
+﻿@page "/generic"
+
+<h2>Templated components with Render Fragmants</h2>
+<br />
+<h1>Pets</h1>
+
+<TableTemplate Items="pets" Context="pet">
+    <TableHeader>
+        <th>ID</th>
+        <th>Name</th>
+        
+    </TableHeader>
+    <RowTemplate>
+        <td>@pet.PetId</td>
+        <td>@pet.Name &nbsp; @if(edit){ <input @bind="pet.Name" /> } </td>
+    </RowTemplate>
+
+</TableTemplate>
+<button class="btn btn-warning mr-4" @onclick="()=>edit=true">Edit</button>
+@if(edit) { <button class="btn btn-success" @onclick="()=>edit=false">Save</button> }
+
+@code {
+    private List<Pet> pets = new()
+    {
+        new Pet { PetId = 2, Name = "Mr. Bigglesworth" },
+        new Pet { PetId = 4, Name = "Salem Saberhagen" },
+        new Pet { PetId = 7, Name = "K-9" }
+    };
+
+    private class Pet
+    {
+        public int PetId { get; set; }
+        public string? Name { get; set; }
+    }
+
+    private bool edit=false;
+
+
+}

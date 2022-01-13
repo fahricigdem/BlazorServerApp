@@ -9,6 +9,7 @@
             <input class="form-control w-25" @bind="gidenDeger" @bind:event="oninput" @onkeyup="()=> child.SetDeger(gidenDeger)" />
 
             <button class="btn btn-primary" @onclick="()=> { child.ToggleGoster(); show=!show; }"> @(show ? "Hide" : "Show") it!</button>
+
         </div>
 
         <ReferencedChild @ref="child" setShow="setShow" setGiden="setGiden"/>

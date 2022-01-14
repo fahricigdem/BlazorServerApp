@@ -7,9 +7,11 @@
   <ItemGroup>
     <None Remove="Controls\" />
     <None Remove="BaseComponents\" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="BaseComponents\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

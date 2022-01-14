@@ -1,0 +1,32 @@
+﻿@page "/form-example"
+@using Microsoft.Extensions.Logging
+@*@inject ILogger<FormExample> Logger // Wasm app'larda kullaniliyor *@
+
+
+<EditForm Model="@exampleModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="exampleModel.Name" />
+    <InputText id="last_name" @bind-Value="exampleModel.LastName" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private ExampleModel exampleModel = new();  // Models kalsöründe
+
+    private void HandleValidSubmit()
+    {
+        // Logger.LogInformation("HandleValidSubmit called"); // Wasm app'larda kullaniliyor
+        Console.WriteLine("Submitted....");
+
+        // Process the valid form
+    }
+
+}
+
+
+
+
+

@@ -33,10 +33,48 @@
         window.getScrollX = function () { myFunction() };
 
         function myFunction() {
-            var left = window.pageYOffset || document.documentElement.scrollTop
-            var top = window.pageXOffset || document.documentElement.scrollLeft
-            console.log(left,top)
+            var top = window.pageYOffset || document.documentElement.scrollTop
+            var left = window.pageXOffset || document.documentElement.scrollLeft
+            //console.log(left, top)
+
+            //DotNet.invokeMethodAsync('BlazorServerApp', 'GetScroll', parseInt(left),parseInt(top))
+  
+        };
+
+
+        //const takip = document.querySelector("#takip")
+
+        //function outputsize() {
+          //  console.log("takip:" ,takip.offsetWidth, takip.offsetHeight)
+            //DotNet.invokeMethodAsync('BlazorServerApp', 'GetSize', parseInt(takip.pageXOffset), parseInt(takip.offsetHeight))
+        //}
+
+        //new ResizeObserver(outputsize).observe(takip)
+        //outputsize()
+
+        
+
+        window.takipEt = function () {
+
+            const observer = new ResizeObserver(
+                e => {
+                    console.log(e[0].contentRect.height)
+                    DotNet.invokeMethodAsync('BlazorServerApp', 'GetSize', parseInt(e[0].contentRect.height))
+                }
+
+            )
+
+            observer.observe(takip)
+
+
+
         }
+
+
+        
+
+
+
     </script>
     <script src="_framework/blazor.server.js"></script>
 </body>

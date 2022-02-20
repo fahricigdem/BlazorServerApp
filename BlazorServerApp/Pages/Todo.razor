@@ -1,7 +1,8 @@
 ﻿@page "/todo"
 @inherits BlazorServerApp.BaseComponents.AnyBaseComponent
+@inject IJSRuntime JS
 
-<h1 style="width:100vw;">ToDos</h1>
+<h1 style="width:100vw; background-color:bisque;">ToDos</h1>
 
 <input @bind="todo" @bind:event="oninput" />
 <p>test: @todo </p>
@@ -32,7 +33,7 @@
 </p>
 
 <p>
-    <select @bind="selectedLocation" >
+    <select @bind="selectedLocation">
         <option value="0">choose a city</option>
         @foreach (var i in person.locations)
         {
@@ -50,12 +51,12 @@
 </ul>
 
 <table class="table">
-    @foreach(var i in person.locations)
+    @foreach (var i in person.locations)
     {
         <tr>
             <td>@i.locationId</td>
             <td>
-                 <input @bind="@i.city" @bind:event="oninput"/>
+                <input @bind="@i.city" @bind:event="oninput" />
             </td>
         </tr>
     }
@@ -63,6 +64,13 @@
 
 <div class="bg-warning">@anything</div>
 
+<div id="takip" @onmouseover="TakipEt" style="resize:vertical; overflow:hidden; background-color: lightskyblue; width: 100px; height: 100px;"></div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
 
 @code {
 
@@ -99,7 +107,7 @@
         Console.WriteLine(person2.salesMan);
         Console.WriteLine(person2.isActive);
         Console.WriteLine(person2.locations);
-        person2.locations = new List<Location> { new Location {locationId=1,city="Izmir"} };
+        person2.locations = new List<Location> { new Location { locationId = 1, city = "Izmir" } };
         Console.WriteLine(person2.locations[0].city);
     }
 
@@ -117,5 +125,35 @@
         public int locationId { get; set; }
         public string city { get; set; }
     }
+
+
+
+    [JSInvokable]
+    public static void GetScroll(int X, int Y)
+    {
+        Console.WriteLine($"X:{X}");
+        Console.WriteLine($"Y:{Y}");
+
+    }
+
+
+    [JSInvokable]
+    public static void GetSize(int X)
+    {
+        Console.WriteLine($"W:{X}");
+        
+
+    }
+
+
+    private async Task TakipEt()
+    {
+        await JS.InvokeAsync<string>("takipEt");
+        
+
+    }
+
+
+
 
 }

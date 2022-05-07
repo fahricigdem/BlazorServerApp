@@ -70,6 +70,31 @@
 
         }
 
+        let id;
+        window.getElement = function (element, dotNetObject) {
+            
+            console.log("1111");
+            element.addEventListener("load", function () {
+                var doc = this.getSVGDocument();
+                console.log(element.id);
+                console.log("2222");
+
+
+                doc.addEventListener("click", function (e) {
+                    console.log(e.target.id);
+                    id = e.target.id
+                    @*e.target.setAttribute("fill", "green");*@
+                    dotNetObject.invokeMethodAsync('GetId', id.toString());
+
+
+                })
+
+            });
+
+        }
+
+
+
 
         
 

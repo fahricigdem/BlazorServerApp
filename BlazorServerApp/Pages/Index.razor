@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
 
 <h1>Hello, world!</h1>
 
@@ -6,4 +8,34 @@ Welcome to your new app.
 
 <SurveyPrompt Title="This is a sub component." />
 
-<Counter increaseBy=5 startingValue=1000/>
+<Counter increaseBy=5 startingValue=1000 />
+
+<p>@gelenId</p>
+
+<object @ref="svgElement" id="testsvg" data="/test.svg" type="image/svg+xml" style="width:1000px;height:1000px;"></object>
+
+@code{
+
+    private string gelenId="id";
+    private ElementReference svgElement;
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var dotNetReference = DotNetObjectReference.Create(this);
+
+            await JS.InvokeVoidAsync("getElement", svgElement,dotNetReference);
+        }
+    }
+
+    [JSInvokable("GetId")]
+    public void GetId(string id) {
+        gelenId = id;
+        Console.WriteLine("--->" + gelenId);
+        StateHasChanged();
+    }
+
+
+
+
+    }

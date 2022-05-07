@@ -8,34 +8,44 @@ Welcome to your new app.
 
 <SurveyPrompt Title="This is a sub component." />
 
-<Counter increaseBy=5 startingValue=1000 />
+@*<Counter increaseBy=5 startingValue=1000 />*@
 
 <p>@gelenId</p>
 
-<object @ref="svgElement" id="testsvg" data="/test.svg" type="image/svg+xml" style="width:1000px;height:1000px;"></object>
+@*<object @ref="svgElement" id="testsvg" data="/test.svg" type="image/svg+xml" style="width:1000px;height:1000px;"></object>*@
+<div id="svgContainerId" ></div>
+
 
 @code{
 
-    private string gelenId="id";
+    private string gelenId = "id";
     private ElementReference svgElement;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        base.OnAfterRender(firstRender);
         if (firstRender)
         {
             var dotNetReference = DotNetObjectReference.Create(this);
-
-            await JS.InvokeVoidAsync("getElement", svgElement,dotNetReference);
+            await JS.InvokeVoidAsync("getElement", svgElement, dotNetReference);
+            Console.WriteLine("OnAfterRenderAsync--- firstRender");
         }
+        Console.WriteLine("OnAfterRenderAsync");
     }
 
     [JSInvokable("GetId")]
-    public void GetId(string id) {
+    public void GetId(string id)
+    {
         gelenId = id;
         Console.WriteLine("--->" + gelenId);
         StateHasChanged();
     }
 
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized");
 
-
-
+        base.OnInitialized();
     }
+
+
+}

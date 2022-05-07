@@ -2,6 +2,7 @@
 @page "/counter/{startingValue:int}"
 @page "/onur"
 @layout MainLayout
+@inject IJSRuntime JS
 
 
 
@@ -11,8 +12,13 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me (@increaseBy)</button>
 
+<div id="svgContainerId" @ref="svgContainer"></div>
+
 
 @code {
+    private ElementReference svgContainer;
+
+
     [Parameter]
     public int startingValue { get; set; }  // in Router initialized, so cannot have default value here!
 
@@ -29,7 +35,7 @@
         base.OnParametersSet();
         currentCount = startingValue;
 
-    } 
+    }
 
     private void IncrementCount()
     {
@@ -37,4 +43,15 @@
         currentCount += increaseBy;
 
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("setSvg", svgContainer);
+        }
+    }
+
+
 }

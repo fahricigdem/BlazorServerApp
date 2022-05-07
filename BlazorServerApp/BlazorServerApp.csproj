@@ -8,10 +8,14 @@
     <None Remove="Controls\" />
     <None Remove="BaseComponents\" />
     <None Remove="Models\" />
+    <None Remove="Pages\test.svg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="BaseComponents\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Pages\test.svg" />
   </ItemGroup>
 </Project>

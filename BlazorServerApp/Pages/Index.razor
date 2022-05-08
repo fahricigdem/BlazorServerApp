@@ -10,15 +10,16 @@ Welcome to your new app.
 
 @*<Counter increaseBy=5 startingValue=1000 />*@
 
-<p>@gelenId</p>
+<p>Id: @gelenId, X: @x</p>
 
 @*<object @ref="svgElement" id="testsvg" data="/test.svg" type="image/svg+xml" style="width:1000px;height:1000px;"></object>*@
-<div id="svgContainerId" ></div>
+<div id="svgContainerId" @onclick="handleClick" ></div>
 
 
 @code{
 
     private string gelenId = "id";
+    private double x;
     private ElementReference svgElement;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -38,6 +39,14 @@ Welcome to your new app.
         gelenId = id;
         Console.WriteLine("--->" + gelenId);
         StateHasChanged();
+    }
+
+    private void handleClick(MouseEventArgs e)
+    {
+        x = e.ClientX;
+        Console.WriteLine("X: " + e.ClientX);
+        Console.WriteLine("id:" + gelenId);
+        @*Console.WriteLine("X: " +  e.ClientX + "Y: " e.ClientY + "id:" + gelenId);*@
     }
 
     protected override void OnInitialized()

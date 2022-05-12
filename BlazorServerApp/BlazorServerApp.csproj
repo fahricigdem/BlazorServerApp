@@ -16,6 +16,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Pages\test.svg" />
+    <Content Include="Pages\test1.svg" />
   </ItemGroup>
 </Project>

@@ -14,8 +14,8 @@
 
 <div id="svgContainerId" @ref="svgContainer"></div>
 
-<div style="padding:50px;">
-    <Svg />
+<div style="padding:50px; width:@($"{size * 300}px");">
+        <Svg />
 </div>
 
 
@@ -23,6 +23,8 @@
 
 @code {
     private ElementReference svgContainer;
+
+    private int size = 4;
 
 
     [Parameter]

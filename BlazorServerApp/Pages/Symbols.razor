@@ -1,0 +1,18 @@
+﻿@for (int i = 4; i < 8; i++)
+{
+    @if (2 < 3)
+    {
+        <rect style="fill:green;fill-rule:evenodd;stroke-width:3"
+              width=@($"{5/size}")
+              height=@($"{5/size}")
+              x=@($"{i*10}")
+              y=@($"{i*15}") />
+
+    }
+}
+
+@code {
+    private int size = 2;
+
+}
+

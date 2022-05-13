@@ -16,7 +16,7 @@
     <link href="css/site.css" rel="stylesheet" />
     <link href="BlazorServerApp.styles.css" rel="stylesheet" />
 </head>
-<body onscroll="getScrollX()">
+<body onscroll="getScrollX()" oncontextmenu="return false;">
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">
@@ -104,7 +104,7 @@
         }
 
 
-        window.setSvg = function (element) {
+        @*window.setSvg = function (element) {
             console.log("#### " + element.id);
             $("#svgContainerId").load("test.svg", function () {
                 $("#mySvg").click(function (e) {
@@ -112,10 +112,40 @@
                 })
             });
             
+        }*@
+
+
+        window.setSvg = function (dotNetObject) {
+            $("#childParent").load("childSvg.svg", function () {
+                $("#childSvg2").click(function (e) {
+                    dotNetObject.invokeMethodAsync('Yazar', e.target.id.toString());
+                    console.log(e.target.id)    
+                })
+
+                document.getElementById("childSvg2").addEventListener('contextmenu', e => {
+                    e.target.setAttribute("fill", "green");
+                });
+
+                document.getElementById("rec3").setAttribute("fill", "yellow");
+
+
+            });
+
         }
 
 
+        window.getSVG_XY = function(svg, x, y) {
+            var pt = svg.createSVGPoint();
+            pt.x = x;
+            pt.y = y;
+            pt = pt.matrixTransform(svg.getScreenCTM().inverse());
+            return pt.x + " " + pt.y;
+        };
+
+
     </script>
+
+
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>

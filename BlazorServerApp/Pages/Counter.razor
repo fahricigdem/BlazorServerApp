@@ -4,82 +4,34 @@
 @layout MainLayout
 @inject IJSRuntime JS
 
-
-
 <h1>Counter</h1>
-
 <p>Current count: @currentCount</p>
-
 <button class="btn btn-primary" @onclick="IncrementCount">Click me (@increaseBy)</button>
 
-<div id="svgContainerId" @ref="svgContainer"></div>
 
-@*<div style="padding:50px; width:@($"{size * 300}px");">
-            <Svg />
-    </div>*@
+@*<div id="svgContainerId" @ref="svgContainer"></div>
+
+<div style="padding:50px; width:@($"{size * 300}px");">
+                <Svg />
+    </div>
 
 <div id="nestedSvg" style="border:solid 5px red; width:50%;" @onclick="@(()=>Console.WriteLine("div tiklandi"))">
-
-    <svg id="parentSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" style="" >
-
-
-        <svg @ref="thesvg" id="childParent" x="0" y="0" viewBox="0 0 1000 1000" @onclick="GetSvgPos">
-
-        </svg>
-
-        <svg id="childSvg1" x="0" y="0" viewBox="0 0 1000 1000" style="" @onclick="@(()=>Console.WriteLine("sembol-svg tiklandi"))">
+        <svg id="parentSvg" xmlns="http://www.w3.org/2000/svg" viewBox=@viewBox style="" >
 
 
-         <SymbolsNestedSvg/>
+            <svg @ref="thesvg" id="childParent" x="0" y="0" viewBox=@viewBox @onclick="GetSvgPos">
+            </svg>
 
+            <svg id="childSvg1" x="0" y="0" viewBox=@viewBox style="" @onclick="@(()=>Console.WriteLine("sembol-svg tiklandi"))">
+                <SymbolsNestedSvg/>
+            </svg>
 
         </svg>
-
-        @* svg pozisyonunu almak icin https://github.com/dotnet/aspnetcore/issues/15440  *@
-
-        @*<svg id="childSvg2" x="0" y="0" viewBox="0 0 1000 1000" style="">
-
-
-            <rect style="fill:green;fill-rule:evenodd;stroke-width:3"
-                  width="500"
-                  height="500"
-                  x="400"
-                  y="400" />
-
-
-        </svg>*@
-
-
-
-    </svg>
-
-</div>
+    </div>*@
 
 
 
 @code {
-    private ElementReference svgContainer;
-
-    ElementReference thesvg;
-
-    async Task GetSvgPos(MouseEventArgs e)
-    {
-        var infoFromJs = await JS.InvokeAsync<string>("getSVG_XY", thesvg, e.ClientX, e.ClientY);
-
-
-        var values = infoFromJs.Split(" ");
-        double x = Double.Parse(values[0]);
-        double y = Double.Parse(values[1]);
-
-        Console.WriteLine(x + "-" + y);
-        Console.WriteLine(Math.Round(x) + "-" + Math.Round(y))  ;
-        @*StateHasChanged();*@
-    }
-
-
-    private int size = 4;
-
-
     [Parameter]
     public int startingValue { get; set; }  // in Router initialized, so cannot have default value here!
 
@@ -94,43 +46,75 @@
     {
         base.OnParametersSet();
         currentCount = startingValue;
-
     }
 
     private void IncrementCount()
     {
-
         currentCount += increaseBy;
-
     }
 
-    @*protected override async Task OnAfterRenderAsync(bool firstRender)
+
+    @*private ElementReference svgContainer;
+
+        ElementReference thesvg;
+
+    async Task GetSvgPos(MouseEventArgs e)
+    {
+        var infoFromJs = await JS.InvokeAsync<string>("getSVG_XY", thesvg, e.ClientX, e.ClientY);
+
+
+        var values = infoFromJs.Split(" ");
+        double x = Double.Parse(values[0]);
+        double y = Double.Parse(values[1]);
+
+        Console.WriteLine(x + "-" + y);
+        Console.WriteLine(Math.Round(x) + "-" + Math.Round(y))  
+    StateHasChanged();
+    }
+
+
+    private int size = 4;
+        private string viewBox;
+
+
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+            {
+                base.OnAfterRender(firstRender);
+                if (firstRender)
+                {
+                    await JS.InvokeVoidAsync("setSvg", svgContainer);
+                }
+           }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             base.OnAfterRender(firstRender);
             if (firstRender)
             {
-                await JS.InvokeVoidAsync("setSvg", svgContainer);
+                var dotNetReference = DotNetObjectReference.Create(this);
+                await JS.InvokeVoidAsync("setSvg", dotNetReference);
             }
-        }*@
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-        if (firstRender)
-        {
-            var dotNetReference = DotNetObjectReference.Create(this);
-            await JS.InvokeVoidAsync("setSvg", dotNetReference);
         }
-    }
 
 
-    [JSInvokable("Yazar")]
-    public void Yazar(string text)
-    {
+        [JSInvokable("Yazar")]
+        public void Yazar(string text)
+        {
 
-        Console.WriteLine(text);
-        StateHasChanged();
-    }
+            Console.WriteLine(text);
+            StateHasChanged();
+        }
+
+        [JSInvokable("GetViewBox")]
+        public void GetViewBox(string vBox)
+        {
+
+            Console.WriteLine(vBox);
+            viewBox = vBox;
+            StateHasChanged();
+        }*@
 
 
 }

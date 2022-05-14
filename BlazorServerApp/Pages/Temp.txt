@@ -1,0 +1,18 @@
+﻿    ElementReference thesvg;
+
+    async Task GetSvgPos(MouseEventArgs e)
+    {
+        var infoFromJs = await JS.InvokeAsync<string>("getSVG_XY", thesvg, e.ClientX, e.ClientY);
+
+
+        var values = infoFromJs.Split(" ");
+        double x = Double.Parse(values[0]);
+        double y = Double.Parse(values[1]);
+
+        Console.WriteLine(x + "-" + y);
+        Console.WriteLine(Math.Round(x) + "-" + Math.Round(y))  ;
+        @*StateHasChanged();*@
+    }
+
+
+

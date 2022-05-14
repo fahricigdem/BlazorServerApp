@@ -1,0 +1,87 @@
+﻿
+@page "/svg"
+@inject IJSRuntime JS
+
+<button class="btn btn-success" @onclick="()=>size+=10">+</button>
+<button class="btn btn-danger" @onclick="()=>size-=10">-</button>
+<div id="NestedSvgContainer" style="border:solid 5px red; width:@($"{size}%");" @onclick="@(()=>Console.WriteLine("div tiklandi"))">
+    <svg id="AncestorSvg" xmlns="http://www.w3.org/2000/svg" viewBox=@viewBox style="" @onclick="@(()=>Console.WriteLine("AncestorSvg tiklandi"))">
+
+        <line x1="500" y1="0" x2="500" y2="1000" style="stroke:#ff000055; stroke-width:1px;" />
+        <line x1="0" y1="500" x2="1000" y2="500" style="stroke: #ff000055; stroke-width: 1px;" />
+
+        <svg id="ParentOfFile" x="0" y="0" viewBox=@viewBox @onclick="@(()=>Console.WriteLine("ParentOfFile tiklandi"))">
+        </svg>
+
+        <svg id="SymbolsSvg" x="0" y="0" viewBox=@viewBox style="" @onclick="@(()=>Console.WriteLine("SymbolsSvg tiklandi"))">
+            @foreach (var p in points)
+            {
+                <circle cx="@p.x" cy="@p.y" r="20" fill="blue" @onclick="()=>Console.WriteLine('P')"/>
+            }
+
+        </svg>
+    </svg>
+</div>
+
+
+
+@code {
+    private int size = 50;
+    private string viewBox;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+        {
+            var dotNetReference = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("setSvg", dotNetReference);
+        }
+    }
+
+
+    [JSInvokable("GetPointData")]
+    public void GetPointData(string text)
+    {
+
+        var values = text.Split(" ");
+        string RoomId = values[0];
+        double MouseX = Double.Parse(values[1]);
+        double MouseY = Double.Parse(values[2]);
+        double SvgX = Math.Round(Double.Parse(values[3]));
+        double SvgY = Math.Round(Double.Parse(values[4]));
+
+        Console.WriteLine(RoomId + "-" + MouseX + "-" + MouseY + "-" + SvgX + "-" + SvgY);
+
+        points.Add(new Point((int)SvgX, (int)SvgY));
+
+        StateHasChanged();
+    }
+
+    public class Point
+    {
+        public int x { get; set; }
+        public int y { get; set; }
+
+        public Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+
+        }
+    }
+    List<Point> points = new();
+
+
+    [JSInvokable("GetViewBox")]
+    public void GetViewBox(string vBox)
+    {
+
+        Console.WriteLine(vBox);
+        viewBox = vBox;
+        StateHasChanged();
+    }
+
+
+
+}

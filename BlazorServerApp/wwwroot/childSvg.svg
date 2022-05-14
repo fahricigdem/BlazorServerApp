@@ -1,20 +1,22 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg"
-     id="childSvg2" x="0" y="0" viewBox="0 0 1000 1000" style="">
+     width="100mm"
+     height="100mm"
+     id="childSvg" x="0" y="0" viewBox="0 0 1000 1000" style="">
 
 
-    <rect style="stroke: red; stroke-width: 1; " id="rec1" fill="#ffffff00"
+    <rect style="stroke: gray; stroke-width: 1; " id="rec1" fill="#ffffff00"
           width="200"
           height="200"
           x="200"
           y="200" />
 
-    <rect style="stroke: red; stroke-width: 1;  "id="rec2" fill="#ffffff00"
+    <rect style="stroke: gray; stroke-width: 1;  " id="rec2" fill="#ffffff00"
           width="200"
           height="200"
           x="400"
           y="200" />
 
-    <rect style="stroke: red; stroke-width: 1; fill: " id="rec3" fill="#ffffff00"
+    <rect style="stroke: gray; stroke-width: 1;" id="rec3" fill="#ffffff00"
           width="200"
           height="200"
           x="600"
@@ -23,23 +25,28 @@
 
 
 
-    <rect style="stroke: red; stroke-width: 1; " id="rec4" fill="#ffffff00"
-          width="200"
-          height="200"
-          x="200"
-          y="400" />
+    <g class="clickable">
+        <rect style="stroke: gray; stroke-width: 1; " id="rec4" fill="#ffffff00"
+              width="200"
+              height="200"
+              x="200"
+              y="400" />
 
-    <rect style="stroke: red; stroke-width: 1; " id="rec5" fill="#ffffff00"
-          width="200"
-          height="200"
-          x="400"
-          y="400" />
+        <rect style="stroke: gray; stroke-width: 1; " id="rec5" fill="#ffffff00"
+              width="200"
+              height="200"
+              x="400"
+              y="400" />
 
-    <rect style="stroke: red; stroke-width: 1; " id="rec6" fill="#ffffff00"
-          width="200"
-          height="200"
-          x="600"
-          y="400" />
+        <rect style="stroke: gray; stroke-width: 1; " id="rec6" fill="#ffffff00"
+              width="200"
+              height="200"
+              x="600"
+              y="400" />
+    </g>
+
+
+    <circle cx="50%" cy="800" r="30" id="circle1" fill="red" />
 
 
 </svg>

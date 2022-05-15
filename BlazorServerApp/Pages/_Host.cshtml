@@ -118,7 +118,7 @@
                 svgFile.removeAttribute('width')
                 svgFile.removeAttribute('height')
                 
-                var rooms = document.querySelectorAll("#childSvg g.clickable rect")
+                var rooms = document.querySelectorAll("#childSvg g#clickable rect")
                 rooms.forEach(item => {
                     item.addEventListener('click', e => {
                         var pt = svgFile.createSVGPoint();

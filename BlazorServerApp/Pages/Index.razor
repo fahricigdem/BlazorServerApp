@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using Microsoft.JSInterop
 @inject IJSRuntime JS
+@using System;
+@using System.IO;
 
 <h1>Hello, world!</h1>
 
@@ -13,7 +15,8 @@ Welcome to your new app.
 <p>Id: @gelenId, X: @x</p>
 
 <object @ref="svgElement" id="testsvg" data="/test.svg" type="image/svg+xml" style="width:1000px;height:1000px;"></object>
-<div id="svgContainerId" @onclick="handleClick" ></div>
+<div id="svgContainerId" @onclick="handleClick"></div>
+
 
 
 @code{
@@ -29,6 +32,58 @@ Welcome to your new app.
             var dotNetReference = DotNetObjectReference.Create(this);
             await JS.InvokeVoidAsync("getElement", svgElement, dotNetReference);
             Console.WriteLine("OnAfterRenderAsync--- firstRender");
+
+
+            // from svg to svg with manupulated ids
+            List<string> lines = new();
+            using (StreamReader sr = new StreamReader("edit_ids.svg"))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    lines.Add(line);
+                }
+            }
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i].Split(" ");
+                for (int j = 0; j < line.Length; j++)
+                {
+                    if (line[j].Length > 3)
+                    {
+                        string str = line[j].Substring(0, 3);
+                        if (str == "id=")
+                        {
+                            var id = line[j].Split('"');
+                            var temp1 = id[1].Trim();
+
+                            var idd = temp1.Split('-');
+                            idd[0] = String.Concat(idd[0], "-GGG");
+
+                            string idd2 = string.Join("-", idd.ToArray());
+                            idd2 = String.Concat('"', idd2, '"');
+                            id[1] = idd2;
+                            string fullId = string.Join("", id.ToArray());
+                            line[j] = fullId;
+                        }
+                    }
+                 }
+                string line2 = string.Join(" ", line.ToArray());
+                Console.WriteLine(line2);
+                lines[i]=line2;
+            }
+
+            using (StreamWriter sw = new StreamWriter("edited_ids.svg"))
+            {
+                foreach (string s in lines)
+                {
+                    sw.WriteLine(s);
+                }
+            }
+            ///////////////////////////
+
+
         }
         Console.WriteLine("OnAfterRenderAsync");
     }

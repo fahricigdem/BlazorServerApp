@@ -9,6 +9,7 @@
     <None Remove="BaseComponents\" />
     <None Remove="Models\" />
     <None Remove="Pages\test.svg" />
+    <None Remove="edit_ids.svg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
@@ -17,5 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\test1.svg" />
+    <Content Include="edit_ids.svg" />
   </ItemGroup>
 </Project>

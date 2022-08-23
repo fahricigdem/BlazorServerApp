@@ -5,6 +5,7 @@
 @using System.IO;
 
 <h1>Hello, world!</h1>
+<button class="btn btn-success" @onclick="Refresh"> Refresh </button>
 
 Welcome to your new app.
 
@@ -19,7 +20,27 @@ Welcome to your new app.
 
 
 
+@inject NavigationManager uriHelper;
+
+@using System.Threading;
+
 @code{
+
+    @*protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var timer = new Timer(new TimerCallback(_ =>
+            {
+                uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+            }), null, 5000, 2000);
+        }
+    }*@
+
+    private void Refresh()
+    {
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
+    }
 
     private string gelenId = "id";
     private double x;
@@ -68,10 +89,10 @@ Welcome to your new app.
                             line[j] = fullId;
                         }
                     }
-                 }
+                }
                 string line2 = string.Join(" ", line.ToArray());
                 Console.WriteLine(line2);
-                lines[i]=line2;
+                lines[i] = line2;
             }
 
             using (StreamWriter sw = new StreamWriter("edited_ids.svg"))
